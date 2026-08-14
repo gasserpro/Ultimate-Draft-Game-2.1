@@ -245,11 +245,10 @@ if pd.notna(img) and str(img).strip():
     st.image(img, use_container_width=True)
 else:
     st.image("https://via.placeholder.com/300x400?text=No+Photo", use_container_width=True)
-
-                    st.write(f"### {p_data.get('name', 'Unknown')}")
+    st.write(f"### {p_data.get('name', 'Unknown')}")
                     if card.get("chaos"): st.error(f"🃏 CHAOS: {card['chaos']}")
 
-                    selected_mgr = st.selectbox("Assign to:", st.session_state.drafters, key=f"mgr_s_{i}")
+                     selected_mgr = st.selectbox("Assign to:", st.session_state.drafters, key=f"mgr_s_{i}")
                     if card["type"] == "mystery":
                         if st.button("Claim Free", key=f"btn_{i}"):
                             st.session_state.teams[selected_mgr].append(p_data['name'])
