@@ -240,7 +240,12 @@ elif st.session_state.game_stage == "drafting":
                 else:
                     p_data = card["data"]
                     img = str(p_data.get("image_url", "")).strip()
-                    st.image(img if "http" in img else "https://via.placeholder.com/300x400?text=No+Photo", use_column_width=True)
+                    # Safe image check + updated Streamlit syntax
+if pd.notna(img) and str(img).strip():
+    st.image(img, use_container_width=True)
+else:
+    st.image("https://via.placeholder.com/300x400?text=No+Photo", use_container_width=True)
+
                     st.write(f"### {p_data.get('name', 'Unknown')}")
                     if card.get("chaos"): st.error(f"🃏 CHAOS: {card['chaos']}")
 
