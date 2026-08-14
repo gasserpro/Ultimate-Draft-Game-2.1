@@ -232,23 +232,23 @@ elif st.session_state.game_stage == "drafting":
         for i, card in enumerate(st.session_state.round_pool):
             with cols[i]:
                 if not card["revealed"]:
-                    st.image("https://media.giphy.com/media/l0HlRnAWX5eUXU0qQ/giphy.gif", use_column_width=True)
-                    if st.button(f"Reveal {i+1}", key=f"rev_{i}"):
-                        card["revealed"] = True
-                        save_game_state()
-                        st.rerun()
-                else:
+                                    else:
                     p_data = card["data"]
                     img = str(p_data.get("image_url", "")).strip()
-                    # Safe image check + updated Streamlit syntax
-if pd.notna(img) and str(img).strip():
-    st.image(img, use_container_width=True)
-else:
-    st.image("https://via.placeholder.com/300x400?text=No+Photo", use_container_width=True)
-    st.write(f"### {p_data.get('name', 'Unknown')}")
-           if card.get("chaos"): st.error(f"🃏 CHAOS: {card['chaos']}")
 
-                     selected_mgr = st.selectbox("Assign to:", st.session_state.drafters, key=f"mgr_s_{i}")
+                    # Safe image check + updated Streamlit syntax
+                    if pd.notna(img) and str(img).strip():
+                        st.image(img, use_container_width=True)
+                    else:
+                        st.image("https://via.placeholder.com/300x400?text=No+Photo", use_container_width=True)
+
+                    st.write(f"### {p_data.get('name', 'Unknown')}")
+                    
+                    if card.get("chaos"): 
+                        st.error(f"🃏 CHAOS: {card['chaos']}")
+
+                    selected_mgr = st.selectbox("Assign to:", st.session_state.drafters, key=f"mgr_s_{i}")
+
                     if card["type"] == "mystery":
                         if st.button("Claim Free", key=f"btn_{i}"):
                             st.session_state.teams[selected_mgr].append(p_data['name'])
@@ -268,8 +268,6 @@ else:
                             st.session_state.all_drafted.append(p_data['name'])
                             save_game_state()
                             st.rerun()
-    else:
-        st.warning(f"No more players available for {curr_pos}!")
 
     st.divider()
     if st.button("➡️ Next Round"):
